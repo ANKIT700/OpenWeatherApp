@@ -19,6 +19,8 @@ import {
 } from "reactstrap";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import { css } from "@emotion/react";
+import { currentWeatherUrl } from "../../common/AppUrls";
+import "./Weather.css";
 
 const defaults = {
   icon: "CLEAR_DAY",
@@ -31,7 +33,7 @@ const override = css`
   margin: 0 auto;
   border-color: red;
 `;
-const Weather = (props) => {
+const WeatherCurrent = (props) => {
   const [state, setState] = useState({
     lat: null,
     lon: null,
@@ -110,7 +112,7 @@ const Weather = (props) => {
 
     axios
       .get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${
+        `${currentWeatherUrl}${
           city != "[object Object]" ? city : query
         }&units=metric&APPID=${process.env.REACT_APP_WEATHERAPIKEY}`
       )
@@ -184,38 +186,6 @@ const Weather = (props) => {
     }
     setState(copyState);
   };
-  //   switch (this.state.main) {
-  //     case "Haze":
-  //       this.setState({ icon: "CLEAR_DAY" });
-  //       break;
-  //     case "Clouds":
-  //       this.setState({ icon: "CLOUDY" });
-  //       break;
-  //     case "Rain":
-  //       this.setState({ icon: "RAIN" });
-  //       break;
-  //     case "Snow":
-  //       this.setState({ icon: "SNOW" });
-  //       break;
-  //     case "Dust":
-  //       this.setState({ icon: "WIND" });
-  //       break;
-  //     case "Drizzle":
-  //       this.setState({ icon: "SLEET" });
-  //       break;
-  //     case "Fog":
-  //       this.setState({ icon: "FOG" });
-  //       break;
-  //     case "Smoke":
-  //       this.setState({ icon: "FOG" });
-  //       break;
-  //     case "Tornado":
-  //       this.setState({ icon: "WIND" });
-  //       break;
-  //     default:
-  //       this.setState({ icon: "CLEAR_DAY" });
-  //   }
-
   console.log("state.city", state.city);
   return (
     <div>
@@ -243,9 +213,9 @@ const Weather = (props) => {
     size={defaults.size}
     animate={defaults.animate}
   /> */}
-      <Row>
+      {/* <Row> */}
         <Col>
-          <Row className="row bg-light mt-1">
+          <Row className=" bg-light ">
             {loader ? (
               <ScaleLoader
                 color={"#D0021B"}
@@ -257,6 +227,13 @@ const Weather = (props) => {
               <Col className="p-4">
                 <h1>{state.city}</h1>
                 {/* <h5> day weather</h5> */}
+                <div class="component__weather-box">
+                  <div class="component__weather-content">
+                    <div class="weather-content__overview"></div>
+                    <div class="weather-content__temp"></div>
+                  </div>
+                  <div class="component__forecast-box"></div>
+                </div>
               </Col>
             )}
           </Row>
@@ -293,37 +270,10 @@ const Weather = (props) => {
             )}
           </Row>
         </Col>
-        {/* <Card>
-          <CardBody>
-            <CardTitle tag="h5">
-              <img
-                alt="Card image cap"
-                src={`https://openweathermap.org/img/w/${state.icon}.png`}
-                width="100px"
-              />
-              {state.city}
-              <CardSubtitle className="mb-2 text-muted" tag="h6">
-                {formatDate(state.date)} {Math.round(state.temday)}&deg;
-              </CardSubtitle>
-            </CardTitle>
-
-            <CardText>
-              <div className="p-2 bd-highlight">
-                <strong>{state.main}</strong> <br />
-                <span className="small">{state.description}</span>
-              </div>
-            </CardText>
-            <Button>
-              <div className="p-1 bd-highlight">
-                {Math.round(state.maxtem)}&deg; / {Math.round(state.mintem)}{" "}
-              </div>
-                &deg;
-            </Button>
-          </CardBody>
-        </Card> */}
-      </Row>
+       
+      {/* </Row> */}
     </div>
   );
 };
 
-export default geolocated()(Weather);
+export default geolocated()(WeatherCurrent);
