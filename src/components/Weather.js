@@ -107,7 +107,6 @@ const Weather = (props) => {
   const search = (city) => {
     // alert(city);
     setLoader(true);
-
     axios
       .get(
         `https://api.openweathermap.org/data/2.5/weather?q=${
