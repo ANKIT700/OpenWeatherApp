@@ -109,7 +109,6 @@ const WeatherCurrent = (props) => {
   const search = (city) => {
     // alert(city);
     setLoader(true);
-
     axios
       .get(
         `${currentWeatherUrl}${
